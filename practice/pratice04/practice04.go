@@ -42,7 +42,7 @@
 
 //数组相同元素下标问题
 //读取两个字符串，第一个字符串A用map存起来，键是对应字符，值是序号,序号可以有多个，因为一个字符不一定只出现一次
-//B挨个解析，比较对应的键，一旦涉及到一样的，添加在对应键的值，B不一样的地方在于用不同方式计数，如用a,b,c,d来计数
+//B挨个解析，输入查询是否在其中，在其中，添加在对应键的值，B不一样的地方在于用不同方式计数，如用len(a)+实际计数
 package main
 import(
 	"fmt"
@@ -50,6 +50,13 @@ import(
 	"os"
 	"strings"
 )
+func StringtoMap(a string) map[rune][]int{
+	mapa := make(map[rune][]int,len(a))
+	for idx,char := range a {
+		mapa[char] = append(mapa[char],idx)
+	}
+	return mapa
+}
 func main(){
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Println("请输入字符串A:")
@@ -58,5 +65,18 @@ func main(){
 	fmt.Println("请输入字符串B:")
 	inputB,_ := reader.ReadString('\n')
 	inputB = strings.TrimSpace(inputB)
-	fmt.Printf("A:%s\nB:%s",inputA,inputB)
+	mapa := StringtoMap(inputA)
+	lenA := len(inputA)
+    for idx,char := range inputB{
+		_,ok := mapa[char]
+		if ok{
+			mapa[char] = append(mapa[char],idx+lenA)
+		}
+	}
+	for char,index := range mapa{
+		if len(index) < 2{
+			delete(mapa,char)
+		}
+	}
+	fmt.Println(mapa)
 }
