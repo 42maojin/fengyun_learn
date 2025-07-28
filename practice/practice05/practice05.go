@@ -50,7 +50,7 @@
 // 		}
 // 	}
 
-// 	for i:=1;i<len(arrA);i++{
+// 	for i:=1;i<len(arrB);i++{
 // 		if minB > arrB[i]{
 // 			minB = arrB[i]
 // 			returnB = i
